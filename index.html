@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess by Tahir v3</title>
+    <link rel="stylesheet" href="chesStyles.css"/>
+</head>
+<body>
+  <!--Form for accepting names of players-->
+  <div id="formDiv">
+    <h1 style="margin-top: 5px;"><u>CHESS</u></h1>
+    <form action="chess.html" onsubmit="submitForm(event);">
+      <div class="nameInput">
+        <img src="Images/wk.png" style="margin-right: 20px;"></img>
+        <div>
+          <label for="p1name">White King's name:</label><hr/>
+          <input type="text" id="p1name" name="p1name" maxlength="26" value="White King" required><br/>
+        </div>
+      </div>
+      <div class="nameInput">
+        <img src="Images/bk.png" style="margin-right: 20px;"></img>
+        <div>
+          <label for="p2name">Black King's name:</label><hr/>
+          <input type="text" id="p2name" name="p2name" maxlength="26" value="Night King" required><br/>
+        </div>
+      </div>
+      <input type="submit" value="Begin">
+    </form>
+  </div>
+
+  <!--Giving IDs to images to identify them in JavaScript, it would be messy to declare them in js-->
+  <img onclick="pieceClick(event)" class="chessPiece" id="br" src="Images/br.png"></img>
+  <img onclick="pieceClick(event)" class="chessPiece" id="bb" src="Images/bb.png"></img>
+  <img onclick="pieceClick(event)" class="chessPiece" id="bk" src="Images/bk.png"></img>
+  <img onclick="pieceClick(event)" class="chessPiece" id="bkn" src="Images/bkn.png"></img>
+  <img onclick="pieceClick(event)" class="chessPiece" id="bp" src="Images/bp.png"></img>
+  <img onclick="pieceClick(event)" class="chessPiece" id="bq" src="Images/bq.png"></img>
+  <img onclick="pieceClick(event)" class="chessPiece" id="wb" src="Images/wb.png"></img>
+  <img onclick="pieceClick(event)" class="chessPiece" id="wk" src="Images/wk.png"></img>
+  <img onclick="pieceClick(event)" class="chessPiece" id="wkn" src="Images/wkn.png"></img>
+  <img onclick="pieceClick(event)" class="chessPiece" id="wp" src="Images/wp.png"></img>
+  <img onclick="pieceClick(event)" class="chessPiece" id="wq" src="Images/wq.png"></img>
+  <img onclick="pieceClick(event)" class="chessPiece" id="wr" src="Images/wr.png"></img>
+  <img onclick="greenSquareClickFn(event)" class="square" id="greenSq" src="Images/greenSq.png"></img>
+  <img onclick="redSquareClickFn(event)" class="square" id="redSq" src="Images/redSq.png"></img>
+  
+  <!--The game begins form here-->
+  <div id="gameDiv" class="initGameCls">
+    <div id="ruleDiv">
+      <hr/>
+      <h2 style="text-align: center;"><u>RULES AND INSTRUCTIONS</u></h2>
+      <p>Castling move has not been implemented yet</p>
+      <p>Stalemate feature has not been implemented yet</p>
+      <p>Check feature has not been implemented yet, thats why the king can move to a position wherer he would be in check. Obviously the other player win if they notice.</p>
+      <p>The captured pieces move to <b>Trash</b> </p>
+      <hr/>
+    </div>
+
+    <img id="head" src="Images/chess.jpg"></img>
+
+    <div class="boardContainer" id="boardContainer"></div>
+
+    <div id="trashDiv">
+      <img style="display: block; margin: auto;" id="trs" src="Images/trash.png"></img>
+    </div>
+
+    <h1 id="pname"></h1>
+  </div>
+
+  <div id="whitePromotion" class="initialPromotionDisplay">
+    <h1 style="font-size: 20px; text-align: center;"><u>CHOOSE PROMOTION OF PAWN</u></h1>
+    <span class="promotionPiece">
+      <img onclick="promotionalPieceClick(event)" class="chessPiece" id="wr" src="Images/wr.png"></img>
+      <nobr>ROOK</nobr>
+    </span>
+    <span class="promotionPiece">
+      <img onclick="promotionalPieceClick(event)" class="chessPiece" id="wb" src="Images/wb.png"></img>
+      <nobr>BISHOP</nobr>
+    </span>
+    <span class="promotionPiece">
+      <img onclick="promotionalPieceClick(event)" class="chessPiece" id="wkn" src="Images/wkn.png"></img>
+      <nobr>KNIGHT</nobr>
+    </span>
+    <span class="promotionPiece">
+      <img onclick="promotionalPieceClick(event)" class="chessPiece" id="wq" src="Images/wq.png"></img>
+      <nobr>QWEEN</nobr>
+    </span>
+  </div>
+  <div id="blackPromotion" class="initialPromotionDisplay">
+    <h1 style="font-size: 20px; text-align: center;"><u>CHOOSE PROMOTION OF PAWN</u></h1>
+    <span class="promotionPiece">
+      <img onclick="promotionalPieceClick(event)" class="chessPiece" id="br" src="Images/br.png"></img>
+      <nobr>ROOK</nobr>
+    </span>
+    <span class="promotionPiece">
+      <img onclick="promotionalPieceClick(event)" class="chessPiece" id="bb" src="Images/bb.png"></img>
+      <nobr>BISHOP</nobr>
+    </span>
+    <span class="promotionPiece">
+      <img onclick="promotionalPieceClick(event)" class="chessPiece" id="bkn" src="Images/bkn.png"></img>
+      <nobr>KNIGHT</nobr>
+    </span>
+    <span class="promotionPiece">
+      <img onclick="promotionalPieceClick(event)" class="chessPiece" id="bq" src="Images/bq.png"></img>
+      <nobr>QWEEN</nobr>
+    </span>
+  </div>
+
+  <div id="matchEnd" class="matchEnd">
+    <h1><u>MATCH ENDED</u></h1>
+    <hr/>
+    <nobr id="winnerName" style="font-size: 25px; font-weight: bold;"></nobr>
+    <nobr style="display: inline; font-size: 25px; font-weight: bold;">&nbsp;is the winner</nobr>
+    <hr/>
+    <a href=" "><input type="submit" value="Play Again"></a>
+  </div>
+
+  <!--Just for the credit HUE HUE HUE -->
+  <img id="credit" src="Images/tahir.jpg"/>                       
+
+  <script src="chesScript.js"></script>
+</body>
+</html>
